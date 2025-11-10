@@ -2,21 +2,26 @@
     const STORAGE_PREFIX = 'custom_toc_state:';
     const storageKey = () => STORAGE_PREFIX + (location.pathname || '/');
 
-    // Заголовки только из области статьи
+    function headerHeight() {
+        const h = document.querySelector('.md-header');
+        return h ? h.offsetHeight : 0;
+    }
+
+    // Заголовки только из содержимого статьи
     function getHeadings() {
         const article = document.querySelector('article.md-content__inner, .md-content__inner');
         if (!article) return [];
         return Array.from(article.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.id);
     }
 
-    // Текст заголовка без ссылки-пермалинка
+    // Текст без пермалинков и спецсимвола "¶"
     function headingText(h) {
         const copy = h.cloneNode(true);
         copy.querySelectorAll('a, .headerlink').forEach(n => n.remove());
-        return (copy.textContent || '').trim();
+        return (copy.textContent || '').replace(/\u00B6/g, '').replace(/¶/g, '').trim();
     }
 
-    // Дерево [{el, level, children}] c корнями только из H1
+    // Дерево, корни — только H1
     function buildTree(headings) {
         const items = headings.map(h => ({ el: h, level: +h.tagName.slice(1), children: [] }));
         const root = [];
@@ -43,7 +48,6 @@
         try { localStorage.setItem(storageKey(), JSON.stringify(s)); } catch { }
     }
 
-    // Рендер списка с кнопками свёртки
     function renderTree(tree) {
         const state = loadState();
 
@@ -55,7 +59,6 @@
                 const key = path.concat(idx).join('.');
                 const hasChildren = node.children && node.children.length > 0;
 
-                // Кнопка-стрелка (или пустой отступ, если детей нет)
                 let btn = null;
                 if (hasChildren) {
                     btn = document.createElement('button');
@@ -64,9 +67,7 @@
                     li.appendChild(btn);
                 } else {
                     const spacer = document.createElement('span');
-                    spacer.style.display = 'inline-block';
-                    spacer.style.width = '1rem';
-                    spacer.style.marginRight = '.25rem';
+                    spacer.className = 'spacer';
                     li.appendChild(spacer);
                 }
 
@@ -88,7 +89,6 @@
                         saveState(state);
                     });
                 }
-
                 if (state[key] && hasChildren) {
                     li.classList.add('collapsed');
                     sub.classList.add('collapsed');
@@ -103,30 +103,32 @@
         return makeList(tree, []);
     }
 
-    // Подсветка активного пункта при прокрутке
-    function attachActiveLink(container) {
+    // Scroll-spy без пропусков внизу
+    function attachActiveLink(container, headings) {
         const links = Array.from(container.querySelectorAll('a[href^="#"]'));
         if (!links.length) return;
 
         const map = new Map(links.map(a => [decodeURIComponent(a.getAttribute('href').slice(1)), a]));
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                const link = map.get(e.target.id);
-                if (!link) return;
-                if (e.isIntersecting) {
-                    links.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                }
-            });
-        }, { rootMargin: '0px 0px -70% 0px', threshold: [0, 1] });
 
-        map.forEach((_, id) => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-        });
+        function setActiveByScroll() {
+            const y = window.scrollY + headerHeight() + 12; // небольшой отступ от шапки
+            let current = headings[0];
+            for (const h of headings) {
+                if (h.offsetTop <= y) current = h; else break;
+            }
+            links.forEach(l => l.classList.remove('active'));
+            const link = map.get(current.id);
+            if (link) link.classList.add('active');
+        }
+
+        window.addEventListener('scroll', setActiveByScroll, { passive: true });
+        window.addEventListener('resize', setActiveByScroll);
+        window.addEventListener('hashchange', () => setTimeout(setActiveByScroll, 0));
+        links.forEach(l => l.addEventListener('click', () => setTimeout(setActiveByScroll, 60)));
+
+        setActiveByScroll();
     }
 
-    // Вставка оглавления в левую колонку
     function mount() {
         const sidebar = document.querySelector('.md-sidebar--primary .md-sidebar__inner');
         if (!sidebar) return;
@@ -149,18 +151,18 @@
 
         box.appendChild(renderTree(tree));
         sidebar.appendChild(box);
-        attachActiveLink(box);
+
+        attachActiveLink(box, headings);
     }
 
-    // 1) Первая загрузка
+    // Первая загрузка
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', mount);
     } else {
         mount();
     }
-
-    // 2) Любая внутренняя навигация при включённом navigation.instant
+    // Поддержка navigation.instant
     if (window.document$) {
-        document$.subscribe(mount);   // <-- ключ к проблеме исчезновения
+        document$.subscribe(mount);
     }
 })();
