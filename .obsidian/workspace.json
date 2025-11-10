@@ -174,14 +174,14 @@
     "site/search",
     "site/index.html",
     "site/404.html",
+    "site/assets/images/favicon.png",
+    "site/assets/images",
     "site/assets/custom_toc.js",
     "site/assets/custom_toc.css",
-    "site/sitemap.xml.gz",
-    "site/sitemap.xml",
-    "site/assets/stylesheets/palette.06af60db.min.css.map",
-    "site/assets/stylesheets/palette.06af60db.min.css",
-    "site/assets/stylesheets/main.84d31ad4.min.css.map",
-    "site/assets/images/favicon.png",
+    "site/assets/javascripts/workers/search.973d3a69.min.js.map",
+    "site/assets/javascripts/workers/search.973d3a69.min.js",
+    "site/assets/javascripts/workers",
+    "site/assets/javascripts/lunr/min/lunr.zh.min.js",
     "docs/index.md"
   ]
 }
