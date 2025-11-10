@@ -5,3 +5,12 @@ theme:
   features:
     - toc.integrate # оглавление страницы в левой панели
     - navigation.sections # (опционально) группировка секций
+markdown_extensions:
+  - toc:
+      permalink: true
+      toc_depth: 2-6
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+nav:
+  - Проект Андромеда: index.md
