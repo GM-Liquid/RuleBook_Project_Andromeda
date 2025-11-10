@@ -170,18 +170,18 @@
   },
   "active": "a41b97f5960a9f43",
   "lastOpenFiles": [
-    "site/assets/custom_toc.css",
-    "site/assets/javascripts/custom_toc.js",
-    "site/assets/javascripts/Новый текстовый документ.txt",
     "site/assets/stylesheets/custom_toc.css",
+    "site/assets/javascripts/custom_toc.js",
+    "site/assets/custom_toc.css",
+    "docs/assets",
+    "docs/Новая папка",
+    "site/assets/javascripts/Новый текстовый документ.txt",
     "site/assets/Новый текстовый документ.txt",
     "site/assets/images/favicon.png",
     "docs/index.md",
     "site/search/search_index.json",
     "site/search",
     "site/index.html",
-    "site/sitemap.xml.gz",
-    "site/sitemap.xml",
-    "site/404.html"
+    "site/sitemap.xml.gz"
   ]
 }
