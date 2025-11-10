@@ -170,6 +170,8 @@
   },
   "active": "a41b97f5960a9f43",
   "lastOpenFiles": [
+    "site/assets/custom_toc.js",
+    "site/assets/custom_toc.css",
     "site/search/search_index.json",
     "site/search",
     "site/index.html",
@@ -179,8 +181,6 @@
     "site/assets/stylesheets/palette.06af60db.min.css.map",
     "site/assets/stylesheets/palette.06af60db.min.css",
     "site/assets/stylesheets/main.84d31ad4.min.css.map",
-    "site/assets/stylesheets/main.84d31ad4.min.css",
-    "site/assets/stylesheets",
     "site/assets/images/favicon.png",
     "docs/index.md"
   ]
