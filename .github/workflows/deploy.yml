@@ -2,8 +2,10 @@ name: Deploy MkDocs
 
 on:
   push:
-    branches:
-      - main # билд и публикация при каждом пуше в main
+    branches: [ main ]  # билд и публикация при каждом пуше в main
+
+permissions:
+  contents: write       # нужно, чтобы пушить в gh-pages
 
 jobs:
   deploy:
@@ -11,17 +13,19 @@ jobs:
 
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.10
+          python-version: '3.10'   # ВАЖНО: строка, а не число! можно также '3.10.x'
+          cache: 'pip'
+
+      - name: Show Python version (debug)
+        run: python --version
 
       - name: Install dependencies
-        run: |
-          pip install mkdocs-material
+        run: pip install mkdocs-material
 
       - name: Build and deploy
-        run: |
-          mkdocs gh-deploy --force
+        run: mkdocs gh-deploy --force
