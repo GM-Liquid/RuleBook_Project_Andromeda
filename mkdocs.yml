@@ -1,0 +1,7 @@
+site_name: Проект Андромеда
+theme:
+  name: material
+
+markdown_extensions:
+  - toc:
+      permalink: true
