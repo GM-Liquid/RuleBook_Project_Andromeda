@@ -1,7 +1,7 @@
 site_name: Проект Андромеда
 theme:
   name: material
-
-markdown_extensions:
-  - toc:
-      permalink: true
+  language: ru
+  features:
+    - toc.integrate # оглавление страницы в левой панели
+    - navigation.sections # (опционально) группировка секций
