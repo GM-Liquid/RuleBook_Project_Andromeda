@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#Вступление",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -168,8 +168,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1889df6c9ff79946",
+  "active": "a41b97f5960a9f43",
   "lastOpenFiles": [
+    "site/assets/custom_toc.css",
+    "site/assets/javascripts/custom_toc.js",
+    "site/assets/javascripts/Новый текстовый документ.txt",
+    "site/assets/stylesheets/custom_toc.css",
+    "site/assets/Новый текстовый документ.txt",
     "site/assets/images/favicon.png",
     "docs/index.md",
     "site/search/search_index.json",
@@ -177,10 +182,6 @@
     "site/index.html",
     "site/sitemap.xml.gz",
     "site/sitemap.xml",
-    "site/404.html",
-    "site/assets/stylesheets/palette.06af60db.min.css.map",
-    "site/assets/stylesheets/palette.06af60db.min.css",
-    "site/assets/stylesheets/main.84d31ad4.min.css.map",
-    "site/assets/stylesheets/main.84d31ad4.min.css"
+    "site/404.html"
   ]
 }

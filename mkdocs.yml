@@ -1,16 +1,27 @@
 site_name: Проект Андромеда
+
 theme:
   name: material
   language: ru
   features:
-    - toc.integrate # оглавление страницы в левой панели
-    - navigation.sections # (опционально) группировка секций
+    - toc.integrate # переносим ToC влево, мы его там заменим своим
+    - navigation.instant
+
 markdown_extensions:
   - toc:
       permalink: true
-      toc_depth: 2-6
+      toc_depth: 1-6
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - attr_list
+
+# единственная страница сайта
 nav:
   - Проект Андромеда: index.md
+
+extra_css:
+  - assets/custom_toc.css
+
+extra_javascript:
+  - assets/custom_toc.js
