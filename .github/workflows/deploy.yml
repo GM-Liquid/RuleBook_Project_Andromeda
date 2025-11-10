@@ -16,13 +16,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: '3.10'   # ВАЖНО: строка, а не число! можно также '3.10.x'
+          python-version: '3.10'
           cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
 
-      - name: Show Python version (debug)
-        run: python --version
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Install dependencies
         run: pip install mkdocs-material
